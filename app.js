@@ -4,6 +4,7 @@ const app = express();
 app.use(express.json());
 
 const userRoutes = require('./routes/user');
+const sauceRoutes = require('./routes/sauce');
 
 mongoose.connect('mongodb+srv://piiquante:piiquante01@piiquante.i1xze.mongodb.net/piiquante?retryWrites=true&w=majority',
     {
@@ -21,6 +22,7 @@ app.use((req, res, next) => {
 });
 
 app.use('/api/auth', userRoutes);
+app.use('/api/sauces', sauceRoutes)
 
 
 module.exports = app;
