@@ -1,5 +1,5 @@
 const Sauce = require('../models/Sauce');
-
+const fs = require('fs');
 
 
 exports.getAllSauces = (req, res, next) => {
@@ -10,7 +10,7 @@ exports.getAllSauces = (req, res, next) => {
 
 exports.getOneSauce = (req, res, next) => {
     Sauce.findOne({ _id: req.params.id })
-        .then(thing => res.status(200).json(thing))
+        .then(sauce => res.status(200).json(sauce))
         .catch(error => res.status(404).json({ error }));
 }
 
@@ -33,20 +33,101 @@ exports.createSauce = (req, res, next) => {
 }
 
 exports.deleteSauce = (req, res, next) => {
-    console.log(req.params.id)
-    Sauce.deleteOne({ _id: req.params.id })
-        .then(() => res.status(200).json({ message: 'Sauce supprimée !' }))
-        .catch(error => res.status(400).json({ error }));
-}
+    Sauce.findOne({ _id: req.params.id })
+        .then(sauce => {
+            const filename = sauce.imageUrl.split('/images/')[1];
+            fs.unlink(`images/${filename}`, () => {
+                Sauce.deleteOne({ _id: req.params.id })
+                    .then(() => res.status(200).json({ message: 'Sauce supprimée !' }))
+                    .catch(error => res.status(400).json({ error }));
+            });
+        })
+        .catch(error => res.status(500).json({ error }));
+};
 
 
 exports.modifySauce = (req, res, next) => {
-    const sauceObject = req.file ?
-        {
-            ...JSON.parse(req.body.sauce),
-            imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
-        } : { ...req.body };
-    Sauce.updateOne({ _id: req.params.id }, { ...sauceObject, _id: req.params.id })
-        .then(() => res.status(200).json({ message: 'Sauce modifiée !' }))
-        .catch(error => res.status(400).json({ error }));
+    let sauceObject = {};
+    if (req.file) {
+        Sauce.findOne({ _id: req.params.id })
+            .then(sauce => {
+                const filename = sauce.imageUrl.split('/images/')[1];
+                console.log(filename)
+                fs.unlink(`images/${filename}`, () => {
+                    sauceObject = {
+                        ...JSON.parse(req.body.sauce),
+                        imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
+                    }
+                    Sauce.updateOne({ _id: req.params.id }, { ...sauceObject, _id: req.params.id })
+                        .then(() => res.status(200).json({ message: 'Objet modifié !' }))
+                        .catch(error => res.status(400).json({ error }));
+                });
+
+            })
+            .catch();//erreur à mettre
+    } else {
+        sauceObject = { ...req.body };
+        Sauce.updateOne({ _id: req.params.id }, { ...sauceObject, _id: req.params.id })
+            .then(() => res.status(200).json({ message: 'Sauce modifiée !' }))
+            .catch(error => res.status(400).json({ error }));
+    }
+}
+
+
+exports.likeSauce = (req, res, next) => {
+    const userId = req.body.userId
+    const like = req.body.like
+    Sauce.findOne({ _id: req.params.id })
+        .then(sauce => {
+            console.log(sauce)
+            switch (like) {
+                case 1:
+                    if (!sauce.userLiked.includes(userId)) {
+                        console.log("like");
+                        sauce.likes++;
+                        sauce.userLiked.push(userId)
+                    }
+                    if (sauce.userDisliked.includes(userId)) {
+                        sauce.dislikes--;
+                        let index = sauce.userDisliked.indexOf(userId)
+                        sauce.userDisliked.splice(index, 1);
+                    }
+
+                    break;
+                case -1:
+                    
+                    if (!sauce.userDisliked.includes(userId)) {
+                        sauce.dislikes++;
+                        sauce.userDisliked.push(userId)
+                    }
+                    if (sauce.userLiked.includes(userId)) {
+                        sauce.likes--;
+                        let index = sauce.userLiked.indexOf(userId)
+                        sauce.userLiked.splice(index, 1);
+                    }
+                    break;
+                case 0:
+                    if (sauce.userLiked.includes(userId)) {
+                        sauce.likes--;
+                        let index = sauce.userLiked.indexOf(userId)
+                        sauce.userLiked.splice(index, 1);
+                    }
+
+                    if (sauce.userDisliked.includes(userId)) {
+                        sauce.dislikes--;
+                        let index = sauce.userDisliked.indexOf(userId)
+                        sauce.userDisliked.splice(index, 1);
+                    }
+                    break;
+            }
+            console.log(sauce)
+            Sauce.updateOne({ _id: req.params.id }, sauce)
+                .then(() => res.status(200).json({ message: 'Sauce modifiée !' }))
+                .catch(error => res.status(400).json({ error }));
+        })
+
+        .catch();
+
+
+
 }
