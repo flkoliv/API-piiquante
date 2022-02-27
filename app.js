@@ -8,7 +8,9 @@ const mongoSanitize = require('express-mongo-sanitize');
 const helmet = require("helmet");
 const rateLimit = require('express-rate-limit')
 
-mongoose.connect('mongodb+srv://piiquante:piiquante01@piiquante.i1xze.mongodb.net/piiquante?retryWrites=true&w=majority',
+require('dotenv').config();
+
+mongoose.connect(process.env.MONGO,
     {
         useNewUrlParser: true,
         useUnifiedTopology: true
