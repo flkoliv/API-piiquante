@@ -21,7 +21,7 @@ Dans le dossier backend, créez un fichierr .env contenant l'url de connexion à
 
 > `MONGO="mongodb+srv://identifiant:password@piiquante.i1xze.mongodb.net/piiquante?retryWrites=true&w=majority"`
 
-pour lancer le backend naviguez jusqu'au répertoire puis ouvrir un terminal et exécutez les commandes suivantes :
+pour lancer le backend naviguez jusqu'au répertoire puis ouvrir un terminal et exécutez la commande :
 
 > `npm install`
 
@@ -33,4 +33,4 @@ Pour démarrer l'API exécuter la commande suivante :
 > `node server`
 
 ## Outils et languages pour la réalisation du projet
-JS, NodeJS et MongoDB
+NodeJS et MongoDB
