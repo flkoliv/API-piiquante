@@ -19,18 +19,18 @@ pour lancer le frontend mettez vous dans le dossier et suivez les instructions d
 
 Dans le dossier backend, créez un fichierr .env contenant l'url de connexion à la base mongoDB du type : 
 
-> MONGO="mongodb+srv://identifiant:password@piiquante.i1xze.mongodb.net/piiquante?retryWrites=true&w=majority"
+> `MONGO="mongodb+srv://identifiant:password@piiquante.i1xze.mongodb.net/piiquante?retryWrites=true&w=majority"`
 
 pour lancer le backend naviguez jusqu'au répertoire puis ouvrir un terminal et exécutez les commandes suivantes :
 
-> npm install
+> `npm install`
 
 
 Cela installe les dépendences.
 
 Pour démarrer l'API exécuter la commande suivante :
 
-> node server
+> `node server`
 
 ## Outils et languages pour la réalisation du projet
 JS, NodeJS et MongoDB
