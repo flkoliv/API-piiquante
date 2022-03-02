@@ -1,5 +1,5 @@
 # Piiquante : Projet 6 du parcours Dev Web Openclassrooms
-===
+
 ## Construisez une API sécurisée pour une application d'avis gastronomiques
 
 Conception d'une API pour le site HOT TAKES qui est une "galerie de sauces" permettant aux utilisateurs de télécharger leurs sauces piquantes préférées et de liker ou disliker les sauces que d'autres partagent. Le front-end de l'application a été développé à l'aide d'Angular et a été précompilé après des tests internes, le but étant donc de mettre en place une API qui correspond aux spécifications fournis dans le cahier des charges.
@@ -9,8 +9,8 @@ Conception d'une API pour le site HOT TAKES qui est une "galerie de sauces" perm
 
 ## Cahier des charges
 
-- [Dépôt du frontend](https://github.com/OpenClassrooms-Student-Center/Web-Developer-P6)
-- [Spécifications techniques](https://github.com/flkoliv/API-piiquante/blob/master/Requirements_DW_P6.pdf)
+* [Dépôt du frontend](https://github.com/OpenClassrooms-Student-Center/Web-Developer-P6)
+* [Spécifications techniques](https://github.com/flkoliv/API-piiquante/blob/master/Requirements_DW_P6.pdf)
 
 ## Installation
 Tout d'abord clonez le repository de l'API dans un dossier backend, puis faire de même pour le repository frontend dont le lien est fourni ci dessus dans un dossier frontend.
