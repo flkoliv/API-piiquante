@@ -33,4 +33,4 @@ Pour démarrer l'API exécuter la commande suivante :
 > `node server`
 
 ## Outils et languages pour la réalisation du projet
-NodeJS et MongoDB
+NodeJS, express et MongoDB

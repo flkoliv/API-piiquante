@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken');
 const validator = require('validator');
 
 
-
+// Création d'un compte
 exports.signup = (req, res, next) => {
     if (validator.isStrongPassword(req.body.password, { minLength: 8, minLowercase: 1, minUppercase: 1, minNumbers: 1, minSymbols: 1})){
         console.log("fort");
@@ -27,6 +27,8 @@ exports.signup = (req, res, next) => {
     
 };
 
+
+// connexion au site
 exports.login = (req, res, next) => {
     User.findOne({ email: req.body.email })
         .then(user => {
@@ -42,7 +44,7 @@ exports.login = (req, res, next) => {
                         userId: user._id,
                         token: jwt.sign(
                             { userId: user._id },
-                            'RANDOM_TOKEN_SECRET',
+                            'cUWt#2CCQr%00B]uPDXiR|$N:p7J`F',
                             { expiresIn: '24h' }
                         )
                     });
